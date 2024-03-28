@@ -2,6 +2,7 @@ import {Metadata} from "next";
 import Image from "next/image";
 import {useRouter} from "next/router";
 import Link from "next/link";
+import {Pagination} from "@/app/components/Pagination";
 
 
 async function getDevices(){
@@ -92,9 +93,11 @@ export default async function Device(){
                         </Link>
                     </div>
                 ))}
-
             </section>
 
+            <div className={'flex flex-row justify-center my-20'}>
+                <Pagination links={deviceItems.links} pages={deviceItems.pages} />
+            </div>
         </div>
     )
 }
