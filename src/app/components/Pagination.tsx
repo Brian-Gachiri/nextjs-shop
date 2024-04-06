@@ -32,12 +32,12 @@ export function Pagination({ links, pages }:Props) {
                     {links.previous ? (
                         <li>
                             <a
-                                className={`relative block rounded bg-gray-100 px-3 py-1.5 text-sm  text-gray-700 transition-all duration-300 hover:bg-yellow-900 hover:text-white mx-1`}>
+                                className={`relative block rounded bg-gray-100 px-3 py-1.5 text-sm  text-gray-700 transition-all duration-300 hover:bg-yellow-900 dark:bg-transparent dark:border dark:border-yellow-800 dark:text-yellow-800 hover:text-white mx-1`}>
                                 Previous
                             </a>
                         </li>
                     ) : (
-                        <span className={'text-sm rounded bg-gray-100 px-3 py-1.5 text-gray-700 mx-1'}>Previous</span>
+                        <span className={'text-sm rounded bg-gray-100 px-3 py-1.5 text-gray-700 dark:border dark:border-gray-700 dark:bg-transparent dark:text-gray-700 mx-1'}>Previous</span>
                     )}
 
                     {Array.from({length: pages}, (_, i) => i + 1).map((page) => (
@@ -50,11 +50,11 @@ export function Pagination({ links, pages }:Props) {
                     <li>
                         {links.next ? (
                             <a
-                                className={`relative block rounded bg-gray-100 px-3 py-1.5 text-sm  text-gray-700 transition-all duration-300 hover:bg-yellow-900 hover:text-white mx-1`}
+                                className={`relative block rounded bg-gray-100 dark:bg-transparent dark:border dark:border-yellow-800 px-3 py-1.5 text-sm text-gray-700 dark:text-yellow-800 transition-all duration-300 hover:bg-yellow-900 hover:text-white mx-1`}
                                 href="#!">Next
                             </a>
                         ): (
-                            <span className={'text-sm rounded bg-gray-200 px-3 py-1.5 text-gray-700 mx-1'}>Next</span>
+                            <span className={'text-sm rounded bg-gray-200 dark:border dark:border-gray-700 dark:bg-transparent dark:text-gray-700 px-3 py-1.5 text-gray-700 mx-1'}>Next</span>
                         )}
 
                     </li>

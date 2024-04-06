@@ -3,17 +3,35 @@ import Image from "next/image";
 import {useRouter} from "next/router";
 import Link from "next/link";
 import {Pagination} from "@/app/components/Pagination";
+import Search from "@/app/components/Search";
+import {DeviceSkeleton} from "@/app/components/Skeletons";
+import { Suspense } from 'react';
+// import {ArrowRightIcon} from '@heroicons/react/24/outline'
 
 
-async function getDevices(){
-    const res = await fetch("http://127.0.0.1:8000/api/devices/",{ next: { revalidate: 60 } })
+
+async function getDevices(search:string, currentPage:number){
+    let url = `http://127.0.0.1:8000/api/devices/?page=${currentPage}`
+    if(search != ''){
+        url = url+`&search=${search}`
+    }
+    const res = await fetch(url,{ next: { revalidate: 60 } })
     if (!res.ok) {
         throw new Error("Failed to fetch data");
     }
     return res.json();
 }
-export default async function Device(){
-    const deviceItems = await getDevices()
+export default async function Device(
+    {searchParams,}:{
+        searchParams?:{
+            search?: string;
+            page?: string;
+        }
+    }
+){
+    const search = searchParams?.search || '';
+    const currentPage = Number(searchParams?.page) || 1;
+    const deviceItems = await getDevices(search, currentPage)
     return (
         <div className="px-6 pt-14 lg:px-8 mt-4">
 
@@ -46,57 +64,47 @@ export default async function Device(){
 
             <div className="text-center p-10 flex flex-col justify-center items-center">
                 <h1 className="font-bold text-4xl mb-4">Browse Products</h1>
-                <div className="flex flex-row w-3/5">
-                    <label className="w-full mx-2 relative">
-                        <span className="sr-only">Search</span>
-                        <input
-                            className="block w-full rounded-md border-0 py-2.5 pl-7 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-gray-200 sm:text-sm sm:leading-6"
-                            placeholder="Search for device..." type="text" name="search"/>
-                    </label>
-                    <button
-                        className="rounded-md bg-yellow-800 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-yellow-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-yellow-900"
-                    >Search
-                    </button>
-                </div>
-
+                <Search placeholder={"Search for Devices..."}/>
             </div>
 
             <section id="Projects"
                      className="w-fit mx-auto grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 justify-items-center justify-center gap-y-20 gap-x-14 mt-10 mb-5">
                 {deviceItems.results && deviceItems.results.map((device: Device) => (
-                    <div key={device.id}
-                         className="w-72 bg-white shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl">
-                        <Link href={'devices/' + device.slug}>
-                            <Image
-                                src={device.image_src}
-                                alt="Product" width={500}
-                                height={500} className="h-80 w-72 object-cover rounded-t-xl"/>
-                            <div className="px-4 py-3 w-72">
-                                <span className="text-gray-400 mr-3 uppercase text-xs">{device.graphics_card}</span>
-                                <p className="text-lg font-bold text-black truncate block capitalize">{device.name}</p>
-                                <div className="flex items-center">
-                                    <p className="text-lg font-semibold text-black cursor-auto my-3">${device.price}</p>
-                                    <del>
-                                        <p className="text-sm text-gray-600 cursor-auto ml-2">${device.price}</p>
-                                    </del>
-                                    <div className="ml-auto">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
-                                             fill="currentColor" className="bi bi-bag-plus" viewBox="0 0 16 16">
-                                            <path fill-rule="evenodd"
-                                                  d="M8 7.5a.5.5 0 0 1 .5.5v1.5H10a.5.5 0 0 1 0 1H8.5V12a.5.5 0 0 1-1 0v-1.5H6a.5.5 0 0 1 0-1h1.5V8a.5.5 0 0 1 .5-.5z"/>
-                                            <path
-                                                d="M8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1zm3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4h-3.5zM2 5h12v9a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V5z"/>
-                                        </svg>
+                    <Suspense key={search+currentPage} fallback={<DeviceSkeleton/>}>
+                        <div key={device.id}
+                             className="w-72 bg-white dark:bg-gray-800 shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl">
+                            <Link href={'devices/' + device.slug}>
+                                <Image
+                                    src={device.image_src}
+                                    alt="Product" width={500}
+                                    height={500} className="h-80 w-72 object-cover rounded-t-xl"/>
+                                <div className="px-4 py-3 w-72">
+                                    <span className="text-gray-400 mr-3 uppercase text-xs">{device.graphics_card}</span>
+                                    <p className="text-lg font-bold text-black dark:text-gray-400 truncate block capitalize">{device.name}</p>
+                                    <div className="flex items-center">
+                                        <p className="text-lg font-semibold text-black dark:text-gray-400 cursor-auto my-3">${device.price}</p>
+                                        <del>
+                                            <p className="text-sm text-gray-600 dark:text-gray-400 cursor-auto ml-2">${device.price}</p>
+                                        </del>
+                                        <div className="ml-auto">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                                                 fill="currentColor" className="bi bi-bag-plus" viewBox="0 0 16 16">
+                                                <path fill-rule="evenodd"
+                                                      d="M8 7.5a.5.5 0 0 1 .5.5v1.5H10a.5.5 0 0 1 0 1H8.5V12a.5.5 0 0 1-1 0v-1.5H6a.5.5 0 0 1 0-1h1.5V8a.5.5 0 0 1 .5-.5z"/>
+                                                <path
+                                                    d="M8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1zm3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4h-3.5zM2 5h12v9a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V5z"/>
+                                            </svg>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </Link>
-                    </div>
+                            </Link>
+                        </div>
+                    </Suspense>
                 ))}
             </section>
 
             <div className={'flex flex-row justify-center my-20'}>
-                <Pagination links={deviceItems.links} pages={deviceItems.pages} />
+                <Pagination links={deviceItems.links} pages={deviceItems.pages}/>
             </div>
         </div>
     )

@@ -67,10 +67,10 @@ export default async function DeviceDetails({params}: Props){
             </nav>
 
             <div className={'text-center'}>
-                <h1 className="text-4xl font-extrabold">{device.name}</h1>
+                <h1 className="text-4xl font-extrabold dark:text-gray-400">{device.name}</h1>
                 <span
-                    className="font-bold">Availability: </span>
-                <span className="">In Stock</span>
+                    className="font-bold dark:text-gray-400">Availability: </span>
+                <span className="dark:text-gray-400">In Stock</span>
             </div>
             <div className="flex-row justify-center">
                 <div className=" py-8">
@@ -84,47 +84,47 @@ export default async function DeviceDetails({params}: Props){
                                 </div>
                             </div>
                             <div className="md:flex-1 px-4">
-                                <p className="text-5xl font-bold mb-4 text-yellow-900">
+                                <p className="text-5xl font-bold mb-4 text-yellow-900 dark:text-yellow-800">
                                     <span>
                                         ${device.price}
                                         <span
-                                            className="text-sm text-gray-600  ml-2 line-through">${device.price}</span>
+                                            className="text-sm text-gray-600  ml-2 line-through dark:text-gray-400">${device.price}</span>
 
                                     </span>
                                 </p>
 
                                 <div className={'mt-9'}>
                                     <span
-                                        className="font-bold text-2xl">Product Specifications:</span>
-                                    <div className="text-sm mt-2 bg-gray-100 p-3 rounded">
+                                        className="font-bold text-2xl dark:text-gray-200">Product Specifications:</span>
+                                    <div className="text-sm mt-2 bg-gray-100 p-3 rounded dark:bg-gray-800">
                                         <span className="font-bold">Graphics Card:</span> {device.graphics_card}
                                     </div>
-                                    <div className="text-sm mt-2 bg-gray-100 p-3 rounded">
+                                    <div className="text-sm mt-2 bg-gray-100 p-3 rounded dark:bg-gray-800">
                                         <span className="font-bold">Power System:</span> {device.power_system}
                                     </div>
-                                    <div className="text-sm mt-2 bg-gray-100 p-3 rounded">
+                                    <div className="text-sm mt-2 bg-gray-100 p-3 rounded dark:bg-gray-800">
                                         <span className="font-bold">USB Ports:</span> {device.usb_ports}
                                     </div>
-                                    <div className="text-sm mt-2 bg-gray-100 p-3 rounded">
+                                    <div className="text-sm mt-2 bg-gray-100 p-3 rounded dark:bg-gray-800">
                                         <span className="font-bold">CPU:</span> {device.cpu}
                                     </div>
-                                    <div className="text-sm mt-2 bg-gray-100 p-3 rounded">
+                                    <div className="text-sm mt-2 bg-gray-100 p-3 rounded dark:bg-gray-800">
                                         <span className="font-bold">Weight:</span> {device.weight}
                                     </div>
-                                    <div className="text-sm mt-2 bg-gray-100 p-3 rounded">
+                                    <div className="text-sm mt-2 bg-gray-100 p-3 rounded dark:bg-gray-800">
                                         <span className="font-bold">Ram:</span> {device.ram}
                                     </div>
                                 </div>
                                 <div className="flex -mx-2 mb-4 mt-4">
                                     <div className="w-1/2 px-2">
                                         <button
-                                            className="w-full bg-transparent border-yellow border text-yellow-700 py-2 px-4 rounded font-bold hover:text-white hover:bg-yellow-900 dark:hover:bg-yellow-900">Add
+                                            className="w-full bg-transparent border-yellow border dark:border-yellow-800 dark:text-yellow-800 text-yellow-700 py-2 px-4 rounded font-bold hover:text-white hover:bg-yellow-900 dark:hover:bg-yellow-900">Add
                                             to Cart
                                         </button>
                                     </div>
                                     <div className="w-1/2 px-2">
                                         <button
-                                            className="w-full  bg-yellow-800 dark:bg-yellow-700 text-white dark:text-white py-2 px-4 rounded font-bold hover:bg-yellow-900 dark:hover:bg-yellow-900">Add
+                                            className="w-full  bg-yellow-800 dark:bg-yellow-800 text-white dark:text-white py-2 px-4 rounded font-bold hover:bg-yellow-900 dark:hover:bg-yellow-900">Add
                                             to Wishlist
                                         </button>
                                     </div>

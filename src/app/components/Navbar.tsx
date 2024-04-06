@@ -27,11 +27,11 @@ export function Navbar(){
                 </div>
                 <div className="hidden lg:flex lg:flex-1 lg:justify-end lg:gap-x-12">
                     {navigation.map((item) => (
-                        <Link key={item.name} href={item.href} className={`text-sm font-semibold leading-6 text-gray-900 ${pathname === item.href ? 'text-yellow-900' : ''}`}>
+                        <Link key={item.name} href={item.href} className={`text-sm font-semibold leading-6 text-gray-900 dark:text-gray-400 ${pathname === item.href ? 'text-yellow-900 dark:text-yellow-700 ' : ''}`}>
                             {item.name}
                         </Link>
                     ))}
-                    <Link href="#" className="text-sm font-semibold leading-6 text-gray-900">
+                    <Link href="#" className="text-sm font-semibold leading-6 text-gray-900 dark:text-gray-400">
                         Log in <span aria-hidden="true">&rarr;</span>
                     </Link>
                 </div>

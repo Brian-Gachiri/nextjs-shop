@@ -19,10 +19,10 @@ export default function Home() {
           </div>
           <div className="mx-auto max-w-2xl py-32 sm:py-48 lg:py-56">
               <div className="text-center">
-                  <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">
+                  <h1 className="text-4xl font-bold tracking-tight text-gray-900 dark:text-gray-400 sm:text-6xl">
                       Unleash the Future of Tech with Us
                   </h1>
-                  <p className="mt-6 text-lg leading-8 text-gray-600">
+                  <p className="mt-6 text-lg leading-8 text-gray-600 dark:text-gray-400">
                       Discover the latest in electronics, from smartphones to drones, and beyond. Your one-stop-shop for
                       cutting-edge gadgets, designed to enhance your life and keep you ahead of the curve.
                   </p>
