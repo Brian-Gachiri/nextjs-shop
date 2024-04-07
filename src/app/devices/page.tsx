@@ -6,6 +6,7 @@ import {Pagination} from "@/app/components/Pagination";
 import Search from "@/app/components/Search";
 import {DeviceSkeleton} from "@/app/components/Skeletons";
 import { Suspense } from 'react';
+import {revalidateTag} from "next/cache";
 // import {ArrowRightIcon} from '@heroicons/react/24/outline'
 
 
@@ -15,7 +16,7 @@ async function getDevices(search:string, currentPage:number){
     if(search != ''){
         url = url+`&search=${search}`
     }
-    const res = await fetch(url,{ next: { revalidate: 60 } })
+    const res = await fetch(url)
     if (!res.ok) {
         throw new Error("Failed to fetch data");
     }
@@ -71,7 +72,7 @@ export default async function Device(
                      className="w-fit mx-auto grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 justify-items-center justify-center gap-y-20 gap-x-14 mt-10 mb-5">
                 {deviceItems.results && deviceItems.results.map((device: Device) => (
                     <Suspense key={search+currentPage} fallback={<DeviceSkeleton/>}>
-                        <div key={device.id}
+                        <div key={device.name}
                              className="w-72 bg-white dark:bg-gray-800 shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl">
                             <Link href={'devices/' + device.slug}>
                                 <Image
