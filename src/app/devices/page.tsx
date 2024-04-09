@@ -9,14 +9,12 @@ import { Suspense } from 'react';
 import {revalidateTag} from "next/cache";
 // import {ArrowRightIcon} from '@heroicons/react/24/outline'
 
-
-
 async function getDevices(search:string, currentPage:number){
     let url = `http://127.0.0.1:8000/api/devices/?page=${currentPage}`
     if(search != ''){
         url = url+`&search=${search}`
     }
-    const res = await fetch(url)
+    const res = await fetch(url, { next: {revalidate: 60} })
     if (!res.ok) {
         throw new Error("Failed to fetch data");
     }
@@ -71,7 +69,7 @@ export default async function Device(
             <section id="Projects"
                      className="w-fit mx-auto grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 justify-items-center justify-center gap-y-20 gap-x-14 mt-10 mb-5">
                 {deviceItems.results && deviceItems.results.map((device: Device) => (
-                    <Suspense key={search+currentPage} fallback={<DeviceSkeleton/>}>
+                    <Suspense key={device.id} fallback={<DeviceSkeleton/>}>
                         <div key={device.name}
                              className="w-72 bg-white dark:bg-gray-800 shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl">
                             <Link href={'devices/' + device.slug}>
